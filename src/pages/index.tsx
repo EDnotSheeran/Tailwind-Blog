@@ -1,10 +1,29 @@
 import React from 'react';
-import Layout from '@components/Layout';
+import Link from 'next/link';
+import Head from 'next/head';
+import { serialize } from 'next-mdx-remote/serialize';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { GetStaticProps, GetStaticPropsResult } from 'next';
 import Container from '@components/Container';
+import { longDate, shortDate } from '@helpers/FormatDate';
 
-const Home: React.FC = () => {
+type Post = {
+  title: MDXRemoteSerializeResult;
+  excerpt: MDXRemoteSerializeResult;
+  publishedAt: string;
+  redirectURL: string;
+};
+
+type HomeProps = {
+  posts: Post[];
+};
+
+const Home: React.FC<HomeProps> = ({ posts = [] }) => {
   return (
-    <Layout>
+    <>
+      <Head>
+        <title>Blog - EDnotSheeran</title>
+      </Head>
       <Container>
         <main>
           <div className="divide-y divide-gray-200">
@@ -17,59 +36,140 @@ const Home: React.FC = () => {
               </p>
             </div>
             <ul className="divide-y divide-gray-200">
-              {/* Article */}
-              <li className="py-12">
-                <article className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
-                  <dl>
-                    <dt className="sr-only">Published on</dt>
-                    <dd className="text-base font-medium text-gray-500">
-                      <time dateTime="2021-08-11T19:30:00.000Z">
-                        August 11, 2021
-                      </time>
-                    </dd>
-                  </dl>
-                  <div className="space-y-5 xl:col-span-3">
-                    <div className="space-y-6">
-                      <h2 className="text-2xl font-bold tracking-tight">
-                        <a
-                          className="text-gray-900"
-                          href="/tailwind-ui-ecommerce"
-                        >
-                          Introducing Tailwind UI Ecommerce
-                        </a>
-                      </h2>
-                      <div className="prose max-w-none text-gray-500">
-                        <div className="prose max-w-none">
-                          <p>
-                            Almost 6 months in the making, we finally released{' '}
-                            <a href="https://tailwindui.com/#product-ecommerce">
-                              Tailwind UI Ecommerce
-                            </a>{' '}
-                            — the first all-new component kit for Tailwind UI
-                            since the initial launch back in February 2020.
-                          </p>
+              {posts.map((post, i) => (
+                <li key={i} className="py-12">
+                  <article className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
+                    <dl>
+                      <dt className="sr-only">Published on</dt>
+                      <dd className="text-base font-medium text-gray-500">
+                        <time dateTime={post.publishedAt}>
+                          {shortDate(post.publishedAt)}
+                        </time>
+                      </dd>
+                    </dl>
+                    <div className="space-y-5 xl:col-span-3">
+                      <div className="space-y-6">
+                        <h2 className="text-2xl font-bold tracking-tight">
+                          <Link href={post.redirectURL}>
+                            <a className="text-gray-900">
+                              <MDXRemote {...post.title} />
+                            </a>
+                          </Link>
+                        </h2>
+                        <div className="prose max-w-none text-gray-500">
+                          <div className="prose max-w-none">
+                            <MDXRemote {...post.excerpt} />
+                          </div>
                         </div>
                       </div>
+                      <div className="text-base font-medium">
+                        <Link href={post.redirectURL}>
+                          <a
+                            className="text-teal-600 hover:text-teal-700"
+                            aria-label='Read "Introducing Tailwind UI Ecommerce"'
+                          >
+                            Read more →
+                          </a>
+                        </Link>
+                      </div>
                     </div>
-                    <div className="text-base font-medium">
-                      <a
-                        className="text-teal-600 hover:text-teal-700"
-                        aria-label='Read "Introducing Tailwind UI Ecommerce"'
-                        href="/tailwind-ui-ecommerce"
-                      >
-                        Read more →
-                      </a>
-                    </div>
-                  </div>
-                </article>
-                {/* Article */}
-              </li>
+                  </article>
+                </li>
+              ))}
             </ul>
           </div>
         </main>
       </Container>
-    </Layout>
+    </>
   );
 };
 
 export default Home;
+
+export const getStaticProps: GetStaticProps = async (
+  context
+): Promise<GetStaticPropsResult<HomeProps>> => {
+  const title = 'Introducing Tailwind UI&nbsp;Ecommerce';
+  const mdxTitle = await serialize(title);
+  const excerpt = 'Some **mdx** text, with a component';
+  const mdxExcerpt = await serialize(excerpt);
+
+  return {
+    props: {
+      posts: [
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+        {
+          title: mdxTitle,
+          excerpt: mdxExcerpt,
+          publishedAt: '2021-08-11T19:30:00.000Z',
+          redirectURL: '/1',
+        },
+      ],
+    },
+  };
+};

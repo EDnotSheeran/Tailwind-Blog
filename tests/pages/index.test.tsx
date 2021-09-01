@@ -3,10 +3,10 @@ import Home from '@pages/index';
 
 describe('Should render the Home Page', () => {
   it('Renders the documentation button', () => {
-    render(<Home />);
+    render(<Home posts={[]} />);
     expect(
-      screen.getByRole('link', {
-        name: 'Documentation →',
+      screen.getByRole('heading', {
+        name: 'Latest',
       })
     ).toBeInTheDocument();
   });

@@ -20,17 +20,88 @@
     @apply font-inter;
   }
 
-  .prose .prose > :first-child {
-    margin-top: 0;
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  audio,
+  canvas,
+  embed,
+  iframe,
+  img,
+  object,
+  svg,
+  video {
+    display: block;
+    vertical-align: middle;
+  }
+
+  img {
+    border-style: solid;
   }
 
   .prose {
-    :last-child {
+    color: #374151;
+    font-size: 1rem;
+    line-height: 1.75;
+
+    & > :first-child {
+      margin-top: 0;
+    }
+
+    & > :last-child {
       margin-bottom: 0;
     }
 
+    p {
+      margin-top: 1.25em;
+      margin-bottom: 1.25em;
+    }
+
     a {
-      @apply underline;
+      color: #111827;
+      text-decoration: underline;
+      font-weight: 400;
+    }
+
+    ul,
+    ol {
+      margin-top: 1.25em;
+      margin-bottom: 1.25em;
+    }
+
+    ul > li {
+      position: relative;
+      padding-left: 1.75em;
+    }
+
+    li {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+
+    ul > li:before {
+      content: '';
+      position: absolute;
+      background-color: #d1d5db;
+      border-radius: 50%;
+      width: 0.375em;
+      height: 0.375em;
+      top: calc(0.875em - 0.1875em);
+      left: 0.25em;
+    }
+
+    ul li:before {
+      background-color: #9ca3af;
+    }
+
+    figure,
+    img,
+    video {
+      margin-top: 2em;
+      margin-bottom: 2em;
     }
   }
 }
