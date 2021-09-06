@@ -1,7 +1,3 @@
-const withMDX = require('@next/mdx')({
-  extension: /\.mdx?$/,
-});
-
 module.exports = {
   reactStrictMode: true,
   basePath: process.env.NEXT_PUBLIC_BASE_PATH,
@@ -13,7 +9,4 @@ module.exports = {
       'avatars.githubusercontent.com',
     ],
   },
-  ...withMDX({
-    pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
-  }),
 };

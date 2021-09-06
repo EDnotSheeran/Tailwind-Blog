@@ -13,3 +13,8 @@ A web developement blog
 - [Commitlint](https://commitlint.js.org/#/)
 - [Next MDX Remote](https://www.npmjs.com/package/next-mdx-remote)
 - [Reading Time](https://www.npmjs.com/package/reading-time)
+
+# Study
+
+https://nextjs.org/docs/going-to-production
+https://nextjs.org/docs/advanced-features/measuring-performance

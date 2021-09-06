@@ -5,7 +5,7 @@ import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { GetStaticProps, GetStaticPropsResult } from 'next';
 import Container from '@components/Container';
-import { longDate, shortDate } from '@helpers/FormatDate';
+import { shortDate } from '@helpers/FormatDate';
 
 type Post = {
   title: MDXRemoteSerializeResult;
