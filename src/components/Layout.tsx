@@ -1,13 +1,27 @@
 import React from 'react';
-import Header from '@components/Header';
+import { Header, Navbar } from '@components';
+import { NextPage } from 'next';
 
-const Layout: React.FC = ({ children }) => {
+const Layout: NextPage & {
+  Login: NextPage;
+} = ({ children }) => {
   return (
-    <div className="antialiased">
+    <>
       <Header />
-      {children}
-    </div>
+      <main>{children}</main>
+    </>
   );
 };
 
 export default Layout;
+
+const Login: NextPage = ({ children }) => {
+  return (
+    <>
+      <Navbar />
+      <main>{children}</main>
+    </>
+  );
+};
+
+Layout.Login = Login;

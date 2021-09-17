@@ -11,48 +11,62 @@ generator client {
 }
 
 model Post {
-  id         Int       @id @default(autoincrement())
-  title      String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime?
-  deletedAt  DateTime?
-  content    String?
-  published  Boolean   @default(false)
-  views      Int       @default(0)
-  User       User      @relation(fields: [authorId], references: [id])
+  id        Int     @id @default(autoincrement())
+  title     String
+  slug      String  @unique
+  content   String?
+  published Boolean @default(false)
+  views     Int     @default(0)
+
   authorId   Int
-  Tag        Tag?      @relation(fields: [tagId], references: [tagName])
+  User       User      @relation(fields: [authorId], references: [id])
   tagId      String?
-  Category   Category? @relation(fields: [categoryId], references: [id])
+  Tag        Tag?      @relation(fields: [tagId], references: [tagName])
   categoryId Int?
+  Category   Category? @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
 }
 
 model Tag {
-  tagName String @id // Must be unique
+  tagName String @id
   posts   Post[]
 }
 
 model Category {
   id             Int        @id @default(autoincrement())
-  parentCategory Category?  @relation("CategoryToCategory", fields: [categoryId], references: [id])
+  parentId       Int?
+  parentCategory Category?  @relation("CategoryToCategory", fields: [parentId], references: [id])
   Category       Category[] @relation("CategoryToCategory")
-  categoryId     Int?
   Post           Post[]
 }
 
 model Profile {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  bio       String?
-  userId    Int      @unique
-  User      User     @relation(fields: [userId], references: [id])
+  id  Int     @id @default(autoincrement())
+  bio String?
+
+  userId Int  @unique
+  User   User @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  name      String?
-  email     String   @unique
-  Post      Post[]
-  Profile   Profile?
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+
+  Post    Post[]
+  Profile Profile?
+  // role    Role     @default(USER)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
 }
+
+// enum Role {
+//   USER
+//   ADMIN
+// }

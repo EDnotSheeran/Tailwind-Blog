@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from '@components/Container';
+import { Container } from '@components';
 import Link from 'next/link';
 
 const Header: React.FC = ({ children }) => {

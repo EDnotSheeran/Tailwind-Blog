@@ -1,37 +1,13 @@
 import React from 'react';
 import { serialize } from 'next-mdx-remote/serialize';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRemote } from 'next-mdx-remote';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsResult } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import Container from '@components/Container';
-import { longDate } from '@helpers/FormatDate';
+import { Container } from '@components';
+import { longDate } from '@utils/Date';
 
-type PostProps = {
-  post: {
-    title: MDXRemoteSerializeResult;
-    content: MDXRemoteSerializeResult;
-    author: {
-      name: string;
-      avatarURL: string;
-      twitter: {
-        user: string;
-        redirectURL: string;
-      };
-    };
-    previous: {
-      title: string;
-      redirectURL: string;
-    };
-    publishedAt: string;
-    meta: {
-      title: string;
-      keywords: string[];
-    };
-  };
-};
-
-const PostList: React.FC<PostProps> = ({ post }) => {
+const PostPage: NextPage<PostProps> = ({ post }) => {
   return (
     <>
       <Head>
@@ -138,18 +114,16 @@ const PostList: React.FC<PostProps> = ({ post }) => {
   );
 };
 
-{
-  /* <MDXRemote {...post.content} components={MDXComponents} /> */
-}
-
-export default PostList;
+export default PostPage;
 
 export const getStaticProps: GetStaticProps = async (
   context
 ): Promise<GetStaticPropsResult<PostProps>> => {
   const title = 'Introducing Tailwind UI&nbsp;Ecommerce';
   const mdxTitle = await serialize(title);
-  const content = 'Some **mdx** text, with a component';
+  const content = `Some **mdx** text, with a component
+  - dasdas
+  - dasdasd`;
   const mdxContenta = await serialize(content);
   return {
     props: {

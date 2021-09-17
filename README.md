@@ -18,3 +18,9 @@ A web developement blog
 
 https://nextjs.org/docs/going-to-production
 https://nextjs.org/docs/advanced-features/measuring-performance
+
+- pesquisar sobre robots.txt, ver os de outros sites, e ver a posibilidade de bloquear o acesso
+
+https://pris.ly/d/connection-strings
+https://pris.ly/d/prisma-schema#using-environment-variables
+https://stackoverflow.com/questions/56079525/override-res-end-with-typescript

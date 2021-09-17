@@ -20,6 +20,12 @@
     @apply font-inter;
   }
 
+  button {
+    @apply p-3;
+    @apply bg-blue-500;
+    @apply text-white;
+  }
+
   img,
   video {
     max-width: 100%;

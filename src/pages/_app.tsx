@@ -1,14 +1,11 @@
-import React from 'react';
-import { AppProps } from 'next/app';
+import React, { ReactElement } from 'react';
 import '@styles/tailwind.css';
-import Layout from '@components/Layout';
+import { Layout } from '@components';
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
-  return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
-  );
+const MyApp: React.FC<AppPropsWithLayout> = ({ Component, pageProps }) => {
+  const getLayout =
+    Component.getLayout ?? ((page: ReactElement) => <Layout>{page}</Layout>);
+  return getLayout(<Component {...pageProps} />);
 };
 
 export default MyApp;

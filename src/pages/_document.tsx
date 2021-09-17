@@ -5,7 +5,6 @@ import Document, {
   NextScript,
   DocumentContext,
 } from 'next/document';
-import packageInfo from '@root/package.json';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -19,10 +18,9 @@ class MyDocument extends Document {
         <Head>
           <meta name="theme-color" content="#000000" />
           <meta name="description" content="Iron Linux" />
-          <meta name="build version" content={packageInfo.version} />
           <link rel="icon" href="https://rocketseat.com.br/favicon.ico" />
         </Head>
-        <body>
+        <body className="antialiased">
           <Main />
           <NextScript />
         </body>

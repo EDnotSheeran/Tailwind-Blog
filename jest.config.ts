@@ -7,8 +7,9 @@ const jestConfig = {
     '^@pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@public/(.*)$': '<rootDir>/src/public/$1',
     '^@styles/(.*)$': '<rootDir>/src/styles/$1',
-    '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@helpers/(.*)$': '<rootDir>/src/helpers/$1',
+    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@components$': '<rootDir>/src/components',
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',

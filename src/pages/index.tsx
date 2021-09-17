@@ -2,23 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import { serialize } from 'next-mdx-remote/serialize';
-import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { GetStaticProps, GetStaticPropsResult } from 'next';
-import Container from '@components/Container';
-import { shortDate } from '@helpers/FormatDate';
+import { MDXRemote } from 'next-mdx-remote';
+import { GetStaticProps, GetStaticPropsResult, NextPage } from 'next';
+import { Container } from '@components';
+import { shortDate } from '@utils/Date';
 
-type Post = {
-  title: MDXRemoteSerializeResult;
-  excerpt: MDXRemoteSerializeResult;
-  publishedAt: string;
-  redirectURL: string;
-};
-
-type HomeProps = {
-  posts: Post[];
-};
-
-const Home: React.FC<HomeProps> = ({ posts = [] }) => {
+const HomePage: NextPage<HomeProps> = ({ posts = [] }) => {
   return (
     <>
       <Head>
@@ -84,7 +73,7 @@ const Home: React.FC<HomeProps> = ({ posts = [] }) => {
   );
 };
 
-export default Home;
+export default HomePage;
 
 export const getStaticProps: GetStaticProps = async (
   context
