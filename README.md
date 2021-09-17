@@ -24,3 +24,4 @@ https://nextjs.org/docs/advanced-features/measuring-performance
 https://pris.ly/d/connection-strings
 https://pris.ly/d/prisma-schema#using-environment-variables
 https://stackoverflow.com/questions/56079525/override-res-end-with-typescript
+https://stackoverflow.com/questions/6313126/how-to-remove-a-directory-from-git-repository
