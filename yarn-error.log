@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: ENOENT: no such file or directory, chmod '/home/ed/Projects/Tailwind-Blog/node_modules/.bin/detective'
+  Error: EACCES: permission denied, mkdir '/home/ed/Projects/Tailwind-Blog/node_modules/@babel'
 
 npm manifest: 
   {

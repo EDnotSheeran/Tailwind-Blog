@@ -25,3 +25,8 @@ https://pris.ly/d/connection-strings
 https://pris.ly/d/prisma-schema#using-environment-variables
 https://stackoverflow.com/questions/56079525/override-res-end-with-typescript
 https://stackoverflow.com/questions/6313126/how-to-remove-a-directory-from-git-repository
+https://medium.com/softonic-eng/docker-compose-from-development-to-production-88000124a57c
+https://vsupalov.com/docker-shared-permissions/
+https://vsupalov.com/docker-shared-permissions/
+https://docs.tibco.com/pub/mash-local/4.3.0/doc/html/docker/GUID-BD850566-5B79-4915-987E-430FC38DAAE4.html
+https://docs.docker.com/compose/compose-file/compose-file-v3/
