@@ -1,23 +1,57 @@
 import nextConnect from 'next-connect';
 import auth from '@middlewares/auth';
-import { deleteUser, createUser, updateUserByUsername } from '@libs/db';
+import prisma from '@lib/prisma';
+import { hashPassword } from '@lib/auth';
 import { NextApiResponse } from 'next';
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>();
 
 handler
   .use(auth)
-  .get((req, res) => {
-    // You do not generally want to return the whole user object
-    // because it may contain sensitive field such as !!password!! Only return what needed
-    // const { name, username, favoriteColor } = req.user
-    // res.json({ user: { name, username, favoriteColor } })
-    res.json({ user: req.user });
+  .get(async (req, res) => {
+    return res.json({
+      user: {
+        ...req.user,
+        salt: undefined,
+        hash: undefined,
+        deleted: undefined,
+      },
+    });
   })
-  .post((req, res) => {
-    const { username, password, name } = req.body;
-    createUser(req, { username, password, name });
-    res.status(200).json({ success: true, message: 'created new user' });
+  .post(async (req, res) => {
+    const { email, password, name } = req.body;
+
+    if (!email || !password || !name) return res.status(400).end();
+
+    const userExists = await prisma.user.findUnique({ where: { email } });
+    if (userExists) return res.status(409).end();
+
+    const { hash, salt } = hashPassword(password);
+
+    const user = await prisma.user.create({
+      data: {
+        email,
+        name,
+        hash,
+        salt,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    req.logIn(user, (err: Error) => {
+      if (err) throw err;
+      // Log the signed up user in
+      return res.status(201).json({
+        user,
+      });
+    });
   })
   .use((req, res, next) => {
     // handlers after this (PUT, DELETE) all require an authenticated user
@@ -28,13 +62,31 @@ handler
       next();
     }
   })
-  .put((req, res) => {
+  .put(async (req, res) => {
     const { name } = req.body;
-    const user = updateUserByUsername(req, req.user.username, { name });
+    const user = await prisma.user.update({
+      data: {
+        name,
+      },
+      where: {
+        id: req.user.id,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
     res.json({ user });
   })
-  .delete((req, res) => {
-    deleteUser(req);
+  .delete(async (req, res) => {
+    await prisma.user.update({
+      data: { deleted: true },
+      where: { id: req.user.id },
+    });
     req.logOut();
     res.status(204).end();
   });

@@ -1,5 +1,5 @@
 import { Layout } from '@components';
-import { useUser, fetcher } from '@libs/hooks';
+import { useUser, fetcher } from '@lib/hooks';
 import useSWR from 'swr';
 
 const UserList: NextPage = () => {

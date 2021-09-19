@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
-import passport from '@libs/passport';
-import session from '@libs/session';
+import passport from '@lib/passport';
+import session from '@lib/session';
 import { NextApiResponse } from 'next';
 
 const auth = nextConnect<NextApiRequest, NextApiResponse>()
@@ -17,13 +17,6 @@ const auth = nextConnect<NextApiRequest, NextApiResponse>()
       },
     })
   )
-  .use((req, res, next) => {
-    // Initialize mocked database
-    // Remove this after you add your own database
-    console.log('Auth Midleware');
-    req.session.users = req.session.users || [];
-    next();
-  })
   .use(passport.initialize())
   .use(passport.session());
 

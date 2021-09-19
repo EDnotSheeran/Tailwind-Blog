@@ -5,15 +5,54 @@ import { GetStaticPaths, GetStaticProps, GetStaticPropsResult } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Container } from '@components';
-import { longDate } from '@utils/Date';
+import { longDate } from '@lib/utils';
+import { useRouter } from 'next/router';
+import ErrorPage from 'next/error';
+import { APP_NAME } from '@lib/constaints';
+import { ParsedUrlQuery } from 'querystring';
 
-const PostPage: NextPage<PostProps> = ({ post }) => {
+type Props = {
+  post: {
+    slug?: string;
+    title: import('next-mdx-remote').MDXRemoteSerializeResult;
+    content: import('next-mdx-remote').MDXRemoteSerializeResult;
+    author: {
+      name: string;
+      avatarURL: string;
+      twitter: {
+        user: string;
+        redirectURL: string;
+      };
+    };
+    previous: {
+      title: string;
+      redirectURL: string;
+    };
+    publishedAt: string;
+    meta: {
+      title: string;
+      keywords: string[];
+    };
+  };
+};
+
+const PostPage: NextPage<Props> = ({ post }) => {
+  const router = useRouter();
+
+  if (!router.isFallback && !post?.slug) {
+    return <ErrorPage statusCode={404} />;
+  }
+
   return (
-    <>
+    <Container>
       <Head>
-        <title>{post.meta.title} - EDnotSheeran</title>
+        <title>
+          {post.meta.title} - {APP_NAME}
+        </title>
       </Head>
-      <Container>
+      {router.isFallback ? (
+        <div>Loading...</div>
+      ) : (
         <main>
           <article className="xl:divide-y xl:divide-gray-200">
             <header className="pt-6 xl:pb-10">
@@ -109,25 +148,39 @@ const PostPage: NextPage<PostProps> = ({ post }) => {
             </div>
           </article>
         </main>
-      </Container>
-    </>
+      )}
+    </Container>
   );
 };
 
 export default PostPage;
 
-export const getStaticProps: GetStaticProps = async (
-  context
-): Promise<GetStaticPropsResult<PostProps>> => {
+interface Params extends ParsedUrlQuery {
+  slug: string;
+}
+
+export const getStaticProps: GetStaticProps<Props, Params> = async ({
+  params,
+}): Promise<GetStaticPropsResult<Props>> => {
   const title = 'Introducing Tailwind UI&nbsp;Ecommerce';
-  const mdxTitle = await serialize(title);
+  const mdxTitle = await serialize(title, {
+    mdxOptions: {},
+  });
   const content = `Some **mdx** text, with a component
   - dasdas
-  - dasdasd`;
+  - dasdasd
+
+
+  <script>
+  let x = 10;
+  console.log(x);
+  </script>`;
   const mdxContenta = await serialize(content);
+
   return {
     props: {
       post: {
+        slug: params?.slug,
         title: mdxTitle,
         content: mdxContenta,
         author: {

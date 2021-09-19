@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useUser } from '@libs/hooks';
+import { useUser } from '@lib/hooks';
 
 const Navbar = () => {
   const [user, { mutate }] = useUser();

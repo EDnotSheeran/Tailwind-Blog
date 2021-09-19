@@ -1,4 +1,4 @@
-import { parse, serialize } from 'cookie';
+import { parse, serialize, CookieSerializeOptions } from 'cookie';
 import { NextHandler } from 'next-connect';
 import { createLoginSession, getLoginSession } from './auth';
 
@@ -15,7 +15,11 @@ export default function session({
   name,
   secret,
   cookie: cookieOpts,
-}: SessionProps) {
+}: {
+  name: string;
+  secret?: string;
+  cookie: CookieSerializeOptions;
+}) {
   return async (
     req: NextApiRequest,
     res: NextApiResponseCustomEnd,

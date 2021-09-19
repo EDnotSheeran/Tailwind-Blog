@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -11,62 +11,88 @@ generator client {
 }
 
 model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  slug      String  @unique
-  content   String?
+  id      String  @id @default(uuid())
+  title   String
+  slug    String  @unique
+  content String?
+
+  ogImage    String
+  coverImage String
+
   published Boolean @default(false)
   views     Int     @default(0)
 
-  authorId   Int
+  authorId   String
   User       User      @relation(fields: [authorId], references: [id])
   tagId      String?
-  Tag        Tag?      @relation(fields: [tagId], references: [tagName])
-  categoryId Int?
+  Tag        Tag?      @relation(fields: [tagId], references: [name])
+  categoryId String?
   Category   Category? @relation(fields: [categoryId], references: [id])
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
-  deletedAt DateTime?
+  deleted   Boolean   @default(false)
 }
 
 model Tag {
-  tagName String @id
-  posts   Post[]
+  name  String @id
+  posts Post[]
 }
 
 model Category {
-  id             Int        @id @default(autoincrement())
-  parentId       Int?
+  id             String     @id @default(uuid())
+  parentId       String?
   parentCategory Category?  @relation("CategoryToCategory", fields: [parentId], references: [id])
   Category       Category[] @relation("CategoryToCategory")
   Post           Post[]
 }
 
 model Profile {
-  id  Int     @id @default(autoincrement())
+  id  String  @id @default(uuid())
   bio String?
 
-  userId Int  @unique
-  User   User @relation(fields: [userId], references: [id])
+  userId String @unique
+  User   User   @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
+  id    String @id @default(uuid())
+  name  String
+  email String @unique
+  hash  String
+  salt  String
 
-  Post    Post[]
-  Profile Profile?
-  // role    Role     @default(USER)
+  Post        Post[]
+  Profile     Profile?
+  role        Role         @default(User)
+  SocialMedia SocialMedia?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
-  deletedAt DateTime?
+  deleted   Boolean   @default(false)
+  confirmed Boolean   @default(false)
 }
 
-// enum Role {
-//   USER
-//   ADMIN
-// }
+enum Role {
+  User
+  Admin
+}
+
+model SocialMedia {
+  id         String   @id @default(uuid())
+  platform   Platform
+  username   String
+  profileUrl String   @map("profile_url")
+
+  userId String
+  User   User   @relation(fields: [userId], references: [id])
+}
+
+enum Platform {
+  Facebook
+  Instagram
+  Twitter
+  Linkedin
+  Youtube
+  Github
+}

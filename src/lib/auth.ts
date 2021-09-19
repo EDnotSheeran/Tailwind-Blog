@@ -1,4 +1,6 @@
 import Iron from '@hapi/iron';
+import crypto from 'crypto';
+import { User } from '@prisma/client';
 
 export async function createLoginSession(
   session: object,
@@ -24,4 +26,21 @@ export async function getLoginSession(
   }
 
   return session;
+}
+
+export function hashPassword(password: string) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto
+    .pbkdf2Sync(password, salt, 1000, 64, 'sha512')
+    .toString('hex');
+
+  return { hash, salt };
+}
+
+export function validatePassword(user: User, inputPassword: crypto.BinaryLike) {
+  const inputHash = crypto
+    .pbkdf2Sync(inputPassword, user.salt, 1000, 64, 'sha512')
+    .toString('hex');
+  const passwordsMatch = user.hash === inputHash;
+  return passwordsMatch;
 }

@@ -12,7 +12,9 @@ services:
     ports:
       - 5432:5432
 
-  api:
+  app:
+    links:
+      - 'db:database'
     container_name: app
     depends_on: [db]
     build:
@@ -21,7 +23,9 @@ services:
     image: tailwind-blog:latest
     ports:
       - 3000:3000
+      - 5555:5555 # Prisma Studio
     volumes:
       - .:/app
       - /app/node_modules
+      - ./node_modules/@prisma/client:/app/node_modules/@prisma/client
       - /app/.next

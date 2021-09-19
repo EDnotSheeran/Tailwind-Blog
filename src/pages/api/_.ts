@@ -1,5 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import nc, { ErrorHandler } from 'next-connect';
+import nextConnect, { ErrorHandler } from 'next-connect';
+import { NextApiResponse } from 'next';
+import auth from '@middlewares/auth';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 const onError: ErrorHandler<NextApiRequest, NextApiResponse> = (
   err,
@@ -10,26 +13,10 @@ const onError: ErrorHandler<NextApiRequest, NextApiResponse> = (
   res.status(500).json({ error: err.toString() });
 };
 
-const handler = nc<NextApiRequest, NextApiResponse>({ onError });
+const handler = nextConnect<NextApiRequest, NextApiResponse>({ onError });
 
-interface ExtendedRequest {
-  user: string;
-}
-interface ExtendedResponse {
-  cookie(name: string, value: string): void;
-}
-
-handler
-  .use((req, res, next) => {
-    if (true) next(Error('Oh no!'));
-  })
-  .get(async (req, res) => {
-    res.json({ msg: 'Hello World' });
-  });
-
-handler.post<ExtendedRequest, ExtendedResponse>((req, res) => {
-  req.user = 'Anakin';
-  res.cookie('sid', '8108');
+handler.use(auth).get((req, res) => {
+  res.status(200).send('dasd');
 });
 
 export default handler;

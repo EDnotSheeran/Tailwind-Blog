@@ -6,9 +6,11 @@ RUN apk add --no-cache libc6-compat
 RUN mkdir -p /app
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json yarn.lock .env ./
+COPY prisma ./prisma/
 
 RUN yarn --frozen-lockfile
+RUN yarn prisma generate
 
 EXPOSE 3000
 

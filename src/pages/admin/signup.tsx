@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
-import { useUser } from '@libs/hooks';
+import { useUser } from '@lib/hooks';
 
 const SignupPage: NextPage = () => {
   const [user, { mutate }] = useUser();
