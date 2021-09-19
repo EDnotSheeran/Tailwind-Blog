@@ -49,3 +49,6 @@ https://github.com/vercel/next.js/discussions/16522
   https://sendgrid.com/go/email-smtp-service-signup-sales-1?utm_source=google&utm_medium=cpc&utm_term=sendgrid&utm_campaign=Sitelink_SendGrid_G_S_LATAM_Brand_(English)&gclid=Cj0KCQjwnJaKBhDgARIsAHmvz6fiuz5XyeTPS1E_A1FFcDGVkbBts9EwYqlSLSmUy8N7v1oGPK56vBoaAqX5EALw_wcB
 
 - Pesquisar sobre pepper e com usar com o bcrypt
+
+- Colocar badges nos mds
+  https://github.com/Naereen/badges
