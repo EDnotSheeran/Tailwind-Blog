@@ -52,3 +52,18 @@ https://github.com/vercel/next.js/discussions/16522
 
 - Colocar badges nos mds
   https://github.com/Naereen/badges
+
+- auto complete para password
+  <input class="form-control" placeholder="Senha" id="password" type="password" autocomplete="new-password" value="" aria-autocomplete="list">
+
+- toastfy para mensagens
+  https://fkhadra.github.io/react-toastify/introduction
+  https://fkhadra.github.io/react-toastify/introduction
+
+- pegar exemplo de inpu do alef
+  https://mova-coleta.netlify.app/register
+  oi@oi.com 12345
+
+- criar validacoes com o yup
+  https://github.com/jquense/yup
+  https://www.npmjs.com/package/yup

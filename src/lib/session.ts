@@ -25,7 +25,7 @@ export default function session({
     res: NextApiResponseCustomEnd,
     next: NextHandler
   ) => {
-    if (!secret) throw new Error('TOKEN_SECRET is missing at .env!');
+    if (!secret) throw new Error('TOKEN_SECRET is missing at .env');
     const cookies = parseCookies(req);
     const token = cookies[name];
     let unsealed = {};
@@ -36,7 +36,7 @@ export default function session({
         unsealed = await getLoginSession(token, secret);
       } catch (e) {
         // The cookie is invalid
-        console.log(e);
+        console.error(e);
       }
     }
 
@@ -44,7 +44,6 @@ export default function session({
 
     // We are proxying res.end to commit the session cookie
     const oldEnd = res.end;
-    console.log(typeof res.end);
 
     res.end = async function resEndProxy(
       ...args: [

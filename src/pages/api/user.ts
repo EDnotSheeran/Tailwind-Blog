@@ -12,8 +12,8 @@ handler
     return res.json({
       user: {
         ...req.user,
-        salt: undefined,
         hash: undefined,
+        salt: undefined,
         deleted: undefined,
       },
     });

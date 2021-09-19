@@ -1,7 +1,6 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import prisma from '@lib/prisma';
-import { User } from '@prisma/client';
 import { validatePassword } from '@lib/auth';
 
 passport.serializeUser<string>((user, done) => {
@@ -16,7 +15,10 @@ passport.deserializeUser(
     done: (err: any, user?: false | User | null) => void
   ) => {
     // deserialize the user id back into user object
-    const user = await prisma.user.findUnique({ where: { id } });
+    const user: User | null = await prisma.user.findUnique({ where: { id } });
+    delete user?.salt;
+    delete user?.hash;
+    delete user?.deleted;
     done(null, user);
   }
 );
@@ -36,6 +38,9 @@ passport.use(
       if (!user || !validatePassword(user, password)) {
         done(null, null);
       } else {
+        delete (user as User).hash;
+        delete (user as User).salt;
+        delete (user as User).deleted;
         done(null, user);
       }
     }

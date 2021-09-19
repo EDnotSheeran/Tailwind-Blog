@@ -9,9 +9,9 @@ type AppPropsWithLayout = import('next').AppProps & {
 type NextApiRequest = import('next').NextApiRequest &
   import('express').Request & {
     session: {
-      users?: User[];
       maxAge?: number;
       createdAt?: number;
+      passport?: { user: string };
     };
     user: User;
   };
