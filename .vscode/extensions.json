@@ -1,3 +1,24 @@
 {
-  "recommendations": []
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "irongeek.vscode-env",
+    "dbaeumer.vscode-eslint",
+    "ecmel.vscode-html-css",
+    "christian-kohler.path-intellisense",
+    "esbenp.prettier-vscode",
+    "prisma.prisma",
+    "msjsdiag.vscode-react-native",
+    "bradlc.vscode-tailwindcss",
+    "visualstudioexptteam.vscodeintellicode",
+    "ms-azuretools.vscode-docker",
+    "orta.vscode-jest",
+    "pkief.material-icon-theme",
+    "coenraads.bracket-pair-colorizer",
+    "silvenon.mdx",
+    "csstools.postcss",
+    "ms-vscode-remote.remote-containers",
+    "simonsiefke.svg-preview",
+    "adpyke.codesnap",
+    "jrebocho.vscode-random"
+  ]
 }

@@ -16,3 +16,7 @@ export function longDate(dateString: string, lang: string = 'en') {
 
   return `${wd}, ${mo} ${da}, ${ye}`;
 }
+
+export function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
+}

@@ -26,6 +26,21 @@
     @apply text-white;
   }
 
+  input {
+    @apply border-2;
+    @apply border-gray-200;
+    @apply p-2;
+    &:focus,
+    &:focus-visible {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #aaa;
+      font-weight: 500;
+    }
+  }
+
   img,
   video {
     max-width: 100%;

@@ -2,7 +2,7 @@ type NextPage<T = {}> = import('next').NextPage<T> & {
   getLayout?: (page: import('react').ReactElement) => import('react').ReactNode;
 };
 
-type AppPropsWithLayout = import('next').AppProps & {
+type AppProps = import('next/app').AppProps & {
   Component: NextPageW;
 };
 

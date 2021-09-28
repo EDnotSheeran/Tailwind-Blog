@@ -20,3 +20,15 @@ handler.use(auth).get((req, res) => {
 });
 
 export default handler;
+
+prisma.post.create({
+  data: {
+    title: 'oi',
+    slug: 'das',
+    ogImage: '',
+    coverImage: '',
+    User: {
+      connect: { id: 'da' },
+    },
+  },
+});

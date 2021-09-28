@@ -171,10 +171,13 @@ export const getStaticProps: GetStaticProps<Props, Params> = async ({
   - dasdasd
 
 
-  <script>
-  let x = 10;
-  console.log(x);
-  </script>`;
+  <p class="asdasd">asdasd</p>
+  ![das](https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg)
+
+
+
+
+  `;
   const mdxContenta = await serialize(content);
 
   return {
